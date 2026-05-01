@@ -1,0 +1,196 @@
+CREATE TABLE Endereco (
+    cep VARCHAR2 (8),
+    numero INTEGER,
+    logradouro VARCHAR2 (50),
+
+    CONSTRAINT endereco_pkey PRIMARY KEY (cep, numero)
+);
+
+CREATE TABLE Pessoa (
+    cpf VARCHAR2 (11),
+    nome_principal VARCHAR2 (30),
+    sobrenome VARCHAR2 (30),
+    cep VARCHAR2 (8),
+    numero INTEGER,
+    complemento VARCHAR2 (30),
+
+    CONSTRAINT pessoa_pkey PRIMARY KEY (cpf),
+    CONSTRAINT pessoa_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero)
+);
+
+CREATE TABLE Telefone_Pessoa (
+    cpf_pessoa VARCHAR2 (11),
+    ddd VARCHAR2 (2),
+    numero VARCHAR2 (9),
+
+    CONSTRAINT telefonepessoa_pkey PRIMARY KEY (cpf_pessoa, ddd, numero),
+    CONSTRAINT telefonepessoa_fkey FOREIGN KEY (cpf_pessoa) REFERENCES Pessoa(cpf)
+);
+
+CREATE TABLE Cargo (
+    nome_cargo VARCHAR2 (20),
+    setor VARCHAR2 (20),
+    salario FLOAT,
+
+    CONSTRAINT cargo_pkey PRIMARY KEY (nome_cargo)
+);
+
+CREATE TABLE Funcionario (
+    cpf VARCHAR2 (11),
+    cpf_supervisor VARCHAR2 (11),
+    cargo VARCHAR2 (20),
+    turno VARCHAR2 (10),
+    status VARCHAR2 (10),
+    escolaridade VARCHAR2 (20),
+    data_admissao DATE,
+
+    CONSTRAINT funcionario_pkey PRIMARY KEY (cpf),
+    CONSTRAINT funcionario_fkey1 FOREIGN KEY (cpf) REFERENCES Pessoa(cpf),
+    CONSTRAINT funcionario_fkey2 FOREIGN KEY (cpf_supervisor) REFERENCES Funcionario(cpf),
+    CONSTRAINT funcionario_fkey3 FOREIGN KEY (cargo) REFERENCES Cargo(nome_cargo)
+);
+
+CREATE TABLE Doador (
+    cpf VARCHAR2 (11),
+    naturalidade_municipio VARCHAR2 (30),
+    naturalidade_estado VARCHAR2 (20),
+    /* talvez seja melhor juntar abo e rh */
+    abo VARCHAR2 (2),
+    rh CHAR (1),
+    nome_mae VARCHAR2 (50),
+    peso FLOAT,
+    altura FLOAT,
+    estado_civil VARCHAR2 (15),
+    ctt_emergencia VARCHAR2 (15),
+
+    CONSTRAINT doador_pkey PRIMARY KEY (cpf),
+    CONSTRAINT doador_fkey FOREIGN KEY (cpf) REFERENCES Pessoa(cpf),
+
+    CONSTRAINT tipo_sanguineo_abo CHECK (abo IN ('A', 'B', 'AB', 'O')),
+    CONSTRAINT tipo_sanguineo_rh CHECK (rh IN ('-', '+'))
+);
+
+CREATE TABLE Triagem (
+    codigo INTEGER,
+    pressao_sistolica NUMBER (3),
+    pressao_diastolica NUMBER (3),
+
+    CONSTRAINT triagem_pkey PRIMARY KEY (codigo),
+    CONSTRAINT check_pressao CHECK (sistolica > diastolica)
+);
+
+CREATE TABLE Doencas_Triagem (
+    codigo_triagem INTEGER,
+    doenca VARCHAR2 (30),
+    data_melhora DATE,
+    cronica BOOLEAN,
+
+    CONSTRAINT doencas_triagem_pkey PRIMARY KEY (codigo_triagem, doenca, data_melhora, cronica),
+    CONSTRAINT doencas_triagem_fkey FOREIGN KEY (codigo_triagem) REFERENCES Triagem(codigo)
+);
+
+CREATE TABLE Medicacoes_Triagem (
+    codigo_triagem INTEGER,
+    medicamento VARCHAR2 (50),
+    dose VARCHAR2 (40) /* não acho que seja a maneira ideal de se armazenar, talvez precise destrinchar em quantidade, medida e frequência*/,
+
+    CONSTRAINT medicacoes_triagem_pkey PRIMARY KEY (codigo_triagem, medicamento, dose),
+    CONSTRAINT medicacoes_triagem_fkey FOREIGN KEY (codigo_triagem) REFERENCES Triagem(codigo)
+);
+
+CREATE TABLE Tria (
+    codigo_triagem INTEGER,
+    cpf_doador VARCHAR2 (11),
+    cpf_funcionario VARCHAR2 (11),
+    /* acho que dá pra armazenar tudo como dia_triagem DATE */
+    dia_triagem INTEGER,
+    mes_triagem INTEGER,
+    ano_triagem INTEGER,
+
+    CONSTRAINT tria_pkey PRIMARY KEY (codigo_triagem),
+    CONSTRAINT tria_fkey1 FOREIGN KEY (codigo_triagem) REFERENCES Triagem(codigo),
+    CONSTRAINT tria_fkey2 FOREIGN KEY (cpf_doador) REFERENCES Triagem(cpf),
+    CONSTRAINT tria_fkey3 FOREIGN KEY (cpf_funcionario) REFERENCES Triagem(cpf)
+);
+
+CREATE TABLE Doacao (
+    cpf_doador VARCHAR2 (11),
+    dia_coleta INTEGER,
+    mes_coleta INTEGER,
+    ano_coleta INTEGER,
+    volume_coleta INTEGER,
+    hemocentro_processamento VARCHAR2 (14),
+
+    CONSTRAINT doacao_pkey PRIMARY KEY (cpf_doador, dia_coleta, mes_coleta, ano_coleta),
+    CONSTRAINT doacao_fkey1 FOREIGN KEY (cpf_doador) REFERENCES Doador(cpf),
+    CONSTRAINT doacao_fkey2 FOREIGN KEY (hemocentro_processamento) REFERENCES Hemocentro(cnpj)
+);
+
+CREATE TABLE Hemocentro (
+    cnpj VARCHAR2 (14),
+    cep VARCHAR2 (8),
+    numero INTEGER,
+    complemento VARCHAR2 (30),
+    nome VARCHAR2 (50),
+    capacidade INTEGER,
+
+    CONSTRAINT hemocentro_pkey PRIMARY KEY (cnpj),
+    CONSTRAINT hemocentro_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero)
+);
+
+CREATE TABLE Telefone_Hemocentro(
+    cnpj_hemocentro VARCHAR2 (14),
+    ddd VARCHAR2 (2),
+    numero VARCHAR2 (9),
+
+    CONSTRAINT telefone_hemocentro_pkey PRIMARY KEY (cnpj_hemocentro, ddd, numero),
+    CONSTRAINT telefone_hemocentro_fkey FOREIGN KEY (cnpj_hemocentro) REFERENCES Telefone_Hemocentro(cnpj)
+);
+
+CREATE TABLE Hemocomponente (
+    codigo INTEGER,
+    componente VARCHAR2 (20),
+    tipo_sanguineo VARCHAR2 (3),
+    volume NUMBER,
+    validade DATE,
+    /* pode virar só um data_processamento */
+    dia_processamento VARCHAR2 (2),
+    mes_processamento VARCHAR2 (2),
+    ano_processamento VARCHAR2 (2),
+
+    CONSTRAINT hemocomponente_pkey PRIMARY KEY (codigo),
+
+    CONSTRAINT tipo_sanguineo_abo CHECK (tipo_sanguineo IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'))
+);
+
+CREATE TABLE Agencia (
+    cnpj VARCHAR2(14),
+    cep VARCHAR2 (8),
+    numero NUMBER,
+    complemento VARCHAR2 (30),
+
+    CONSTRAINT agencia_pkey PRIMARY KEY (cnpj),
+    CONSTRAINT agencia_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero)
+);
+
+CREATE TABLE Telefone_Agencia(
+    cnpj_agencia VARCHAR2 (14),
+    ddd VARCHAR2 (2),
+    numero VARCHAR2 (9),
+
+    CONSTRAINT telefone_agencia_pkey PRIMARY KEY (cnpj_agencia, ddd, numero),
+    CONSTRAINT telefone_agencia_fkey FOREIGN KEY (cnpj_agencia) REFERENCES Agencia(cnpj)
+);
+
+CREATE TABLE Lote (
+    codigo_hemocomponente INTEGER,
+    hemocentro_origem VARCHAR2 (14),
+    hemocentro_transferido VARCHAR2 (14),
+    agencia_transferida VARCHAR2 (14),
+
+    CONSTRAINT lote_pkey PRIMARY KEY (codigo_hemocomponente),
+    CONSTRAINT lote_fkey1 FOREIGN KEY (codigo_hemocomponente) REFERENCES Hemocomponente(codigo),
+    CONSTRAINT lote_fkey2 FOREIGN KEY (hemocentro_origem) REFERENCES Hemocentro(cnpj),
+    CONSTRAINT lote_fkey3 FOREIGN KEY (hemocentro_transferido) REFERENCES Hemocentro(cnpj),
+    CONSTRAINT lote_fkey4 FOREIGN KEY (agencia_transferida) REFERENCES Agencia(cnpj),
+);
