@@ -76,17 +76,19 @@ CREATE TABLE Triagem (
     pressao_diastolica NUMBER (3),
 
     CONSTRAINT triagem_pkey PRIMARY KEY (codigo),
-    CONSTRAINT check_pressao CHECK (sistolica > diastolica)
+    CONSTRAINT check_pressao CHECK (pressao_sistolica > pressao_diastolica)
 );
 
 CREATE TABLE Doencas_Triagem (
     codigo_triagem INTEGER,
     doenca VARCHAR2 (30),
     data_melhora DATE,
-    cronica BOOLEAN,
+    cronica VARCHAR (1),
 
     CONSTRAINT doencas_triagem_pkey PRIMARY KEY (codigo_triagem, doenca, data_melhora, cronica),
-    CONSTRAINT doencas_triagem_fkey FOREIGN KEY (codigo_triagem) REFERENCES Triagem(codigo)
+    CONSTRAINT doencas_triagem_fkey FOREIGN KEY (codigo_triagem) REFERENCES Triagem(codigo),
+
+    CONSTRAINT bool_cronica CHECK (cronica in ('S', 'N'))
 );
 
 CREATE TABLE Medicacoes_Triagem (
@@ -109,8 +111,20 @@ CREATE TABLE Tria (
 
     CONSTRAINT tria_pkey PRIMARY KEY (codigo_triagem),
     CONSTRAINT tria_fkey1 FOREIGN KEY (codigo_triagem) REFERENCES Triagem(codigo),
-    CONSTRAINT tria_fkey2 FOREIGN KEY (cpf_doador) REFERENCES Triagem(cpf),
-    CONSTRAINT tria_fkey3 FOREIGN KEY (cpf_funcionario) REFERENCES Triagem(cpf)
+    CONSTRAINT tria_fkey2 FOREIGN KEY (cpf_doador) REFERENCES Doador(cpf),
+    CONSTRAINT tria_fkey3 FOREIGN KEY (cpf_funcionario) REFERENCES Funcionario(cpf)
+);
+
+CREATE TABLE Hemocentro (
+    cnpj VARCHAR2 (14),
+    cep VARCHAR2 (8),
+    numero INTEGER,
+    complemento VARCHAR2 (30),
+    nome VARCHAR2 (50),
+    capacidade INTEGER,
+
+    CONSTRAINT hemocentro_pkey PRIMARY KEY (cnpj),
+    CONSTRAINT hemocentro_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero)
 );
 
 CREATE TABLE Doacao (
@@ -126,25 +140,13 @@ CREATE TABLE Doacao (
     CONSTRAINT doacao_fkey2 FOREIGN KEY (hemocentro_processamento) REFERENCES Hemocentro(cnpj)
 );
 
-CREATE TABLE Hemocentro (
-    cnpj VARCHAR2 (14),
-    cep VARCHAR2 (8),
-    numero INTEGER,
-    complemento VARCHAR2 (30),
-    nome VARCHAR2 (50),
-    capacidade INTEGER,
-
-    CONSTRAINT hemocentro_pkey PRIMARY KEY (cnpj),
-    CONSTRAINT hemocentro_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero)
-);
-
 CREATE TABLE Telefone_Hemocentro(
     cnpj_hemocentro VARCHAR2 (14),
     ddd VARCHAR2 (2),
     numero VARCHAR2 (9),
 
     CONSTRAINT telefone_hemocentro_pkey PRIMARY KEY (cnpj_hemocentro, ddd, numero),
-    CONSTRAINT telefone_hemocentro_fkey FOREIGN KEY (cnpj_hemocentro) REFERENCES Telefone_Hemocentro(cnpj)
+    CONSTRAINT telefone_hemocentro_fkey FOREIGN KEY (cnpj_hemocentro) REFERENCES Hemocentro(cnpj)
 );
 
 CREATE TABLE Hemocomponente (
@@ -192,5 +194,5 @@ CREATE TABLE Lote (
     CONSTRAINT lote_fkey1 FOREIGN KEY (codigo_hemocomponente) REFERENCES Hemocomponente(codigo),
     CONSTRAINT lote_fkey2 FOREIGN KEY (hemocentro_origem) REFERENCES Hemocentro(cnpj),
     CONSTRAINT lote_fkey3 FOREIGN KEY (hemocentro_transferido) REFERENCES Hemocentro(cnpj),
-    CONSTRAINT lote_fkey4 FOREIGN KEY (agencia_transferida) REFERENCES Agencia(cnpj),
+    CONSTRAINT lote_fkey4 FOREIGN KEY (agencia_transferida) REFERENCES Agencia(cnpj)
 );
