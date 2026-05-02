@@ -58,9 +58,7 @@ CREATE TABLE Doador (
     cpf VARCHAR2 (11),
     naturalidade_municipio VARCHAR2 (30),
     naturalidade_estado VARCHAR2 (20),
-    /* talvez seja melhor juntar abo e rh */
-    abo VARCHAR2 (2),
-    rh CHAR (1),
+    tipo_sanguineo VARCHAR2 (3),
     nome_mae VARCHAR2 (50),
     peso FLOAT,
     altura FLOAT,
@@ -70,8 +68,7 @@ CREATE TABLE Doador (
     CONSTRAINT doador_pkey PRIMARY KEY (cpf),
     CONSTRAINT doador_fkey FOREIGN KEY (cpf) REFERENCES Pessoa(cpf),
 
-    CONSTRAINT tipo_sanguineo_abo CHECK (abo IN ('A', 'B', 'AB', 'O')),
-    CONSTRAINT tipo_sanguineo_rh CHECK (rh IN ('-', '+'))
+    CONSTRAINT check_tipo_sanguineo CHECK (abo IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'))
 );
 
 CREATE TABLE Triagem (
@@ -98,7 +95,7 @@ CREATE TABLE Doencas_Triagem (
 CREATE TABLE Medicacoes_Triagem (
     codigo_triagem INTEGER,
     medicamento VARCHAR2 (50),
-    dose VARCHAR2 (40) /* não acho que seja a maneira ideal de se armazenar, talvez precise destrinchar em quantidade, medida e frequência*/,
+    dose VARCHAR2 (30),
 
     CONSTRAINT medicacoes_triagem_pkey PRIMARY KEY (codigo_triagem, medicamento, dose),
     CONSTRAINT medicacoes_triagem_fkey FOREIGN KEY (codigo_triagem) REFERENCES Triagem(codigo)
@@ -108,10 +105,7 @@ CREATE TABLE Tria (
     codigo_triagem INTEGER,
     cpf_doador VARCHAR2 (11),
     cpf_funcionario VARCHAR2 (11),
-    /* acho que dá pra armazenar tudo como dia_triagem DATE */
-    dia_triagem INTEGER,
-    mes_triagem INTEGER,
-    ano_triagem INTEGER,
+    data_triagem DATE,
 
     CONSTRAINT tria_pkey PRIMARY KEY (codigo_triagem),
     CONSTRAINT tria_fkey1 FOREIGN KEY (codigo_triagem) REFERENCES Triagem(codigo),
@@ -159,10 +153,7 @@ CREATE TABLE Hemocomponente (
     tipo_sanguineo VARCHAR2 (3),
     volume NUMBER,
     validade DATE,
-    /* pode virar só um data_processamento */
-    dia_processamento VARCHAR2 (2),
-    mes_processamento VARCHAR2 (2),
-    ano_processamento VARCHAR2 (2),
+    data_processamento DATE,
 
     CONSTRAINT hemocomponente_pkey PRIMARY KEY (codigo),
 
