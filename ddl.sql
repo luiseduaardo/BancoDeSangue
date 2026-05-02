@@ -13,9 +13,13 @@ CREATE TABLE Pessoa (
     cep VARCHAR2 (8),
     numero INTEGER,
     complemento VARCHAR2 (30),
+    sexo VARCHAR2 (1),
+    data_nascimento DATE,
 
     CONSTRAINT pessoa_pkey PRIMARY KEY (cpf),
-    CONSTRAINT pessoa_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero)
+    CONSTRAINT pessoa_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero),
+
+    CONSTRAINT sexo_check CHECK (sexo in ('M', 'F'))
 );
 
 CREATE TABLE Telefone_Pessoa (
