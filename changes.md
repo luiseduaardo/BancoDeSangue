@@ -7,6 +7,7 @@ mudanças realizadas
 5. em Hemocomponente, data_processamento foi aglutinado em um atributo de tipo DATE
 6. em Doação, data_coleta foi aglutinado em um atributo de tipo DATE
 
-mudança a se analisar:
+mudanças a se analisar:
 * para respeitar a regra de negócio e facilitar o uso prático do BD, em Medicações_Triagem, dose vira um atributo composto por quantidade (inteiro), unidade (varchar) e frequência (varchar)
 * problema: provavelmente gera um problema na BCFN que precisa ser verificado anteriormente
+* na tabela endereço, logradouro não depende de número e complemento(?)
