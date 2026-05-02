@@ -24,11 +24,14 @@ CREATE TABLE Pessoa (
 
 CREATE TABLE Telefone_Pessoa (
     cpf_pessoa VARCHAR2 (11),
-    ddd VARCHAR2 (2),
-    numero VARCHAR2 (9),
+    ddd NUMBER (2, 0), -- 2 dígitos, 0 dígitos decimais
+    numero NUMBER (9, 0), -- idem
 
     CONSTRAINT telefonepessoa_pkey PRIMARY KEY (cpf_pessoa, ddd, numero),
-    CONSTRAINT telefonepessoa_fkey FOREIGN KEY (cpf_pessoa) REFERENCES Pessoa(cpf)
+    CONSTRAINT telefonepessoa_fkey FOREIGN KEY (cpf_pessoa) REFERENCES Pessoa(cpf),
+
+    CONSTRAINT ddd_check CHECK (ddd > 10), -- DDDs vão de 11 a 99
+    CONSTRAINT numero_check CHECK (numero >= 100000000) -- evita números que começam com 0
 );
 
 CREATE TABLE Cargo (
@@ -140,11 +143,14 @@ CREATE TABLE Doacao (
 
 CREATE TABLE Telefone_Hemocentro(
     cnpj_hemocentro VARCHAR2 (14),
-    ddd VARCHAR2 (2),
-    numero VARCHAR2 (9),
+    ddd NUMBER (2, 0),
+    numero NUMBER (9, 0),
 
     CONSTRAINT telefone_hemocentro_pkey PRIMARY KEY (cnpj_hemocentro, ddd, numero),
     CONSTRAINT telefone_hemocentro_fkey FOREIGN KEY (cnpj_hemocentro) REFERENCES Hemocentro(cnpj)
+
+    CONSTRAINT ddd_check CHECK (ddd > 10), -- DDDs vão de 11 a 99
+    CONSTRAINT numero_check CHECK (numero >= 100000000) -- evita números que começam com 0
 );
 
 CREATE TABLE Hemocomponente (
@@ -172,11 +178,14 @@ CREATE TABLE Agencia (
 
 CREATE TABLE Telefone_Agencia(
     cnpj_agencia VARCHAR2 (14),
-    ddd VARCHAR2 (2),
-    numero VARCHAR2 (9),
-
+    ddd NUMBER (2, 0),
+    numero NUMBER (9, 0),
+    
     CONSTRAINT telefone_agencia_pkey PRIMARY KEY (cnpj_agencia, ddd, numero),
     CONSTRAINT telefone_agencia_fkey FOREIGN KEY (cnpj_agencia) REFERENCES Agencia(cnpj)
+
+    CONSTRAINT ddd_check CHECK (ddd > 10), -- DDDs vão de 11 a 99
+    CONSTRAINT numero_check CHECK (numero >= 100000000) -- evita números que começam com 0
 );
 
 CREATE TABLE Lote (
