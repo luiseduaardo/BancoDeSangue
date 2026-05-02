@@ -130,13 +130,11 @@ CREATE TABLE Hemocentro (
 
 CREATE TABLE Doacao (
     cpf_doador VARCHAR2 (11),
-    dia_coleta INTEGER,
-    mes_coleta INTEGER,
-    ano_coleta INTEGER,
+    data_coleta DATE,
     volume_coleta INTEGER,
     hemocentro_processamento VARCHAR2 (14),
 
-    CONSTRAINT doacao_pkey PRIMARY KEY (cpf_doador, dia_coleta, mes_coleta, ano_coleta),
+    CONSTRAINT doacao_pkey PRIMARY KEY (cpf_doador, data_coleta),
     CONSTRAINT doacao_fkey1 FOREIGN KEY (cpf_doador) REFERENCES Doador(cpf),
     CONSTRAINT doacao_fkey2 FOREIGN KEY (hemocentro_processamento) REFERENCES Hemocentro(cnpj)
 );
@@ -180,7 +178,7 @@ CREATE TABLE Telefone_Agencia(
     cnpj_agencia VARCHAR2 (14),
     ddd NUMBER (2, 0),
     numero NUMBER (9, 0),
-    
+
     CONSTRAINT telefone_agencia_pkey PRIMARY KEY (cnpj_agencia, ddd, numero),
     CONSTRAINT telefone_agencia_fkey FOREIGN KEY (cnpj_agencia) REFERENCES Agencia(cnpj)
 
