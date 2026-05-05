@@ -1,7 +1,6 @@
 CREATE TABLE Endereco (
     cep VARCHAR2 (8),
     numero INTEGER,
-    complemento VARCHAR2 (30),
     logradouro VARCHAR2 (50),
 
     CONSTRAINT endereco_pkey PRIMARY KEY (cep, numero, complemento)
@@ -18,7 +17,7 @@ CREATE TABLE Pessoa (
     data_nascimento DATE,
 
     CONSTRAINT pessoa_pkey PRIMARY KEY (cpf),
-    CONSTRAINT pessoa_fkey FOREIGN KEY (cep, numero, complemento) REFERENCES Endereco(cep, numero, complemento),
+    CONSTRAINT pessoa_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero),
 
     CONSTRAINT sexo_check CHECK (sexo in ('M', 'F'))
 );
@@ -32,7 +31,7 @@ CREATE TABLE Telefone_Pessoa (
     CONSTRAINT telefonepessoa_fkey FOREIGN KEY (cpf_pessoa) REFERENCES Pessoa(cpf),
 
     CONSTRAINT ddd_check CHECK (ddd > 10), -- DDDs vão de 11 a 99
-    CONSTRAINT numero_check CHECK (numero >= 100000000) -- evita números que começam com 0
+    CONSTRAINT numero_check CHECK (numero >= 900000000) -- evita números que não começam com 9
 );
 
 CREATE TABLE Cargo (
@@ -72,7 +71,8 @@ CREATE TABLE Doador (
     CONSTRAINT doador_pkey PRIMARY KEY (cpf),
     CONSTRAINT doador_fkey FOREIGN KEY (cpf) REFERENCES Pessoa(cpf),
 
-    CONSTRAINT check_tipo_sanguineo CHECK (abo IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'))
+    CONSTRAINT check_tipo_sanguineo CHECK (abo IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')),
+    CONSTRAINT check_peso CHECK (peso > 50)
 );
 
 CREATE TABLE Triagem (
@@ -99,7 +99,7 @@ CREATE TABLE Doencas_Triagem (
 CREATE TABLE Medicacoes_Triagem (
     codigo_triagem INTEGER,
     medicamento VARCHAR2 (50),
-    dose VARCHAR2 (30),
+    dose VARCHAR2 (50),
 
     CONSTRAINT medicacoes_triagem_pkey PRIMARY KEY (codigo_triagem, medicamento, dose),
     CONSTRAINT medicacoes_triagem_fkey FOREIGN KEY (codigo_triagem) REFERENCES Triagem(codigo)
@@ -146,10 +146,10 @@ CREATE TABLE Telefone_Hemocentro(
     numero NUMBER (9, 0),
 
     CONSTRAINT telefone_hemocentro_pkey PRIMARY KEY (cnpj_hemocentro, ddd, numero),
-    CONSTRAINT telefone_hemocentro_fkey FOREIGN KEY (cnpj_hemocentro) REFERENCES Hemocentro(cnpj)
+    CONSTRAINT telefone_hemocentro_fkey FOREIGN KEY (cnpj_hemocentro) REFERENCES Hemocentro(cnpj),
 
     CONSTRAINT ddd_check CHECK (ddd > 10), -- DDDs vão de 11 a 99
-    CONSTRAINT numero_check CHECK (numero >= 100000000) -- evita números que começam com 0
+    CONSTRAINT numero_check CHECK (numero >= 900000000) -- evita números que não começam com 9
 );
 
 CREATE TABLE Hemocomponente (
@@ -181,10 +181,10 @@ CREATE TABLE Telefone_Agencia(
     numero NUMBER (9, 0),
 
     CONSTRAINT telefone_agencia_pkey PRIMARY KEY (cnpj_agencia, ddd, numero),
-    CONSTRAINT telefone_agencia_fkey FOREIGN KEY (cnpj_agencia) REFERENCES Agencia(cnpj)
+    CONSTRAINT telefone_agencia_fkey FOREIGN KEY (cnpj_agencia) REFERENCES Agencia(cnpj),
 
     CONSTRAINT ddd_check CHECK (ddd > 10), -- DDDs vão de 11 a 99
-    CONSTRAINT numero_check CHECK (numero >= 100000000) -- evita números que começam com 0
+    CONSTRAINT numero_check CHECK (numero >= 900000000) -- evita números que não começam com 9
 );
 
 CREATE TABLE Lote (
