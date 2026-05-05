@@ -1,9 +1,29 @@
+DROP TABLE Lote CASCADE CONSTRAINTS;
+DROP TABLE Telefone_Agencia CASCADE CONSTRAINTS;
+DROP TABLE Agencia CASCADE CONSTRAINTS;
+DROP TABLE Hemocomponente CASCADE CONSTRAINTS;
+DROP TABLE Telefone_Hemocentro CASCADE CONSTRAINTS;
+DROP TABLE Doacao CASCADE CONSTRAINTS;
+DROP TABLE Hemocentro CASCADE CONSTRAINTS;
+DROP TABLE Tria CASCADE CONSTRAINTS;
+DROP TABLE Medicacoes_Triagem CASCADE CONSTRAINTS;
+DROP TABLE Doencas_Triagem CASCADE CONSTRAINTS;
+DROP TABLE Triagem CASCADE CONSTRAINTS;
+DROP TABLE Doador CASCADE CONSTRAINTS;
+DROP TABLE Funcionario CASCADE CONSTRAINTS;
+DROP TABLE Cargo CASCADE CONSTRAINTS;
+DROP TABLE Telefone_Pessoa CASCADE CONSTRAINTS;
+DROP TABLE Pessoa CASCADE CONSTRAINTS;
+DROP TABLE Endereco CASCADE CONSTRAINTS;
+
+DROP SEQUENCE seq_triagem;
+
 CREATE TABLE Endereco (
     cep VARCHAR2 (8),
     numero INTEGER,
     logradouro VARCHAR2 (50),
 
-    CONSTRAINT endereco_pkey PRIMARY KEY (cep, numero, complemento)
+    CONSTRAINT endereco_pkey PRIMARY KEY (cep, numero)
 );
 
 CREATE TABLE Pessoa (
@@ -30,8 +50,8 @@ CREATE TABLE Telefone_Pessoa (
     CONSTRAINT telefonepessoa_pkey PRIMARY KEY (cpf_pessoa, ddd, numero),
     CONSTRAINT telefonepessoa_fkey FOREIGN KEY (cpf_pessoa) REFERENCES Pessoa(cpf),
 
-    CONSTRAINT ddd_check CHECK (ddd > 10), -- DDDs vão de 11 a 99
-    CONSTRAINT numero_check CHECK (numero >= 900000000) -- evita números que não começam com 9
+    CONSTRAINT ddd_check_pessoa CHECK (ddd > 10), -- DDDs vão de 11 a 99
+    CONSTRAINT numero_check_pessoa CHECK (numero >= 900000000) -- evita números que não começam com 9
 );
 
 CREATE TABLE Cargo (
@@ -71,9 +91,12 @@ CREATE TABLE Doador (
     CONSTRAINT doador_pkey PRIMARY KEY (cpf),
     CONSTRAINT doador_fkey FOREIGN KEY (cpf) REFERENCES Pessoa(cpf),
 
-    CONSTRAINT check_tipo_sanguineo CHECK (abo IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')),
+    CONSTRAINT check_tipo_sanguineo CHECK (tipo_sanguineo IN ('A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-')),
     CONSTRAINT check_peso CHECK (peso > 50)
 );
+
+CREATE SEQUENCE seq_triagem
+INCREMENT BY 1 START WITH 1;
 
 CREATE TABLE Triagem (
     codigo INTEGER,
@@ -126,7 +149,7 @@ CREATE TABLE Hemocentro (
     capacidade INTEGER,
 
     CONSTRAINT hemocentro_pkey PRIMARY KEY (cnpj),
-    CONSTRAINT hemocentro_fkey FOREIGN KEY (cep, numero, complemento) REFERENCES Endereco(cep, numero, complemento)
+    CONSTRAINT hemocentro_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero)
 );
 
 CREATE TABLE Doacao (
@@ -148,8 +171,8 @@ CREATE TABLE Telefone_Hemocentro(
     CONSTRAINT telefone_hemocentro_pkey PRIMARY KEY (cnpj_hemocentro, ddd, numero),
     CONSTRAINT telefone_hemocentro_fkey FOREIGN KEY (cnpj_hemocentro) REFERENCES Hemocentro(cnpj),
 
-    CONSTRAINT ddd_check CHECK (ddd > 10), -- DDDs vão de 11 a 99
-    CONSTRAINT numero_check CHECK (numero >= 900000000) -- evita números que não começam com 9
+    CONSTRAINT ddd_check_hemocentro CHECK (ddd > 10), -- DDDs vão de 11 a 99
+    CONSTRAINT numero_check_hemocentro CHECK (numero >= 900000000) -- evita números que não começam com 9
 );
 
 CREATE TABLE Hemocomponente (
@@ -172,7 +195,7 @@ CREATE TABLE Agencia (
     complemento VARCHAR2 (30),
 
     CONSTRAINT agencia_pkey PRIMARY KEY (cnpj),
-    CONSTRAINT agencia_fkey FOREIGN KEY (cep, numero, complemento) REFERENCES Endereco(cep, numero, complemento)
+    CONSTRAINT agencia_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero)
 );
 
 CREATE TABLE Telefone_Agencia(
@@ -183,8 +206,8 @@ CREATE TABLE Telefone_Agencia(
     CONSTRAINT telefone_agencia_pkey PRIMARY KEY (cnpj_agencia, ddd, numero),
     CONSTRAINT telefone_agencia_fkey FOREIGN KEY (cnpj_agencia) REFERENCES Agencia(cnpj),
 
-    CONSTRAINT ddd_check CHECK (ddd > 10), -- DDDs vão de 11 a 99
-    CONSTRAINT numero_check CHECK (numero >= 900000000) -- evita números que não começam com 9
+    CONSTRAINT ddd_check_agencia CHECK (ddd > 10), -- DDDs vão de 11 a 99
+    CONSTRAINT numero_check_agencia CHECK (numero >= 900000000) -- evita números que não começam com 9
 );
 
 CREATE TABLE Lote (
