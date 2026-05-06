@@ -1,3 +1,24 @@
+DELETE FROM Lote;
+DELETE FROM Doacao;
+DELETE FROM Tria;
+DELETE FROM Medicacoes_Triagem;
+DELETE FROM Doencas_Triagem;
+DELETE FROM Triagem;
+DELETE FROM Telefone_Hemocentro;
+DELETE FROM Telefone_Agencia;
+DELETE FROM Telefone_Pessoa;
+DELETE FROM Hemocomponente;
+DELETE FROM Funcionario;
+DELETE FROM Doador;
+DELETE FROM Agencia;
+DELETE FROM Hemocentro;
+DELETE FROM Pessoa;
+DELETE FROM Cargo;
+DELETE FROM Endereco;
+
+DROP SEQUENCE seq_triagem;
+CREATE SEQUENCE seq_triagem INCREMENT BY 1 START WITH 1;
+
 INSERT INTO ENDERECO (cep, numero, logradouro) 
 VALUES ('50740000', 100, 'Avenida Central');
 INSERT INTO ENDERECO (cep, numero, logradouro) 
@@ -24,6 +45,12 @@ INSERT INTO ENDERECO (cep, numero, logradouro)
 VALUES ('59170170', 250, 'Estrada da Batalha');
 INSERT INTO ENDERECO (cep, numero, logradouro) 
 VALUES ('59990180', 175, 'Rua Governador Roberto');
+INSERT INTO ENDERECO (cep, numero, logradouro) 
+VALUES ('50070040', 150, 'Rua Joaquim Nabuco');
+INSERT INTO ENDERECO (cep, numero, logradouro) 
+VALUES ('50670901', 1235, 'Avenida Professor Moraes Rego');
+INSERT INTO ENDERECO (cep, numero, logradouro) 
+VALUES ('50050000', 300, 'Avenida Conde da Boa Vista');
 
 
 INSERT INTO CARGO (nome_cargo, setor, salario) 
@@ -48,6 +75,26 @@ INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade
 VALUES (1004, 'Hemácias', 'A+', 250, TO_DATE('2024-06-15', 'YYYY-MM-DD'), TO_DATE('2024-05-10', 'YYYY-MM-DD'));
 INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade, data_processamento) 
 VALUES (1005, 'Plasma', 'O-', 150, TO_DATE('2025-07-12', 'YYYY-MM-DD'), TO_DATE('2024-07-12', 'YYYY-MM-DD'));
+INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade, data_processamento) 
+VALUES (1006, 'Hemácias', 'O-', 250, TO_DATE('2024-06-20', 'YYYY-MM-DD'), TO_DATE('2024-05-15', 'YYYY-MM-DD'));
+INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade, data_processamento) 
+VALUES (1007, 'Hemácias', 'A+', 260, TO_DATE('2024-06-21', 'YYYY-MM-DD'), TO_DATE('2024-05-16', 'YYYY-MM-DD'));
+INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade, data_processamento) 
+VALUES (1008, 'Plasma', 'AB+', 180, TO_DATE('2025-05-15', 'YYYY-MM-DD'), TO_DATE('2024-05-15', 'YYYY-MM-DD'));
+INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade, data_processamento) 
+VALUES (1009, 'Plaquetas', 'O+', 55, TO_DATE('2024-05-20', 'YYYY-MM-DD'), TO_DATE('2024-05-15', 'YYYY-MM-DD'));
+INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade, data_processamento) 
+VALUES (1010, 'Crioprecipitado', 'A-', 40, TO_DATE('2025-05-10', 'YYYY-MM-DD'), TO_DATE('2024-05-10', 'YYYY-MM-DD'));
+INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade, data_processamento) 
+VALUES (1011, 'Hemácias', 'B+', 245, TO_DATE('2024-06-22', 'YYYY-MM-DD'), TO_DATE('2024-05-17', 'YYYY-MM-DD'));
+INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade, data_processamento) 
+VALUES (1012, 'Plasma', 'B-', 160, TO_DATE('2025-05-17', 'YYYY-MM-DD'), TO_DATE('2024-05-17', 'YYYY-MM-DD'));
+INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade, data_processamento) 
+VALUES (1013, 'Plaquetas', 'AB-', 60, TO_DATE('2024-05-22', 'YYYY-MM-DD'), TO_DATE('2024-05-17', 'YYYY-MM-DD'));
+INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade, data_processamento) 
+VALUES (1014, 'Hemácias', 'O+', 250, TO_DATE('2024-06-25', 'YYYY-MM-DD'), TO_DATE('2024-05-20', 'YYYY-MM-DD'));
+INSERT INTO HEMOCOMPONENTE (codigo, componente, tipo_sanguineo, volume, validade, data_processamento) 
+VALUES (1015, 'Plasma', 'A+', 170, TO_DATE('2025-05-20', 'YYYY-MM-DD'), TO_DATE('2024-05-20', 'YYYY-MM-DD'));
 
 
 INSERT INTO PESSOA (cpf, nome_principal, sobrenome, cep, numero, complemento, sexo, data_nascimento) 
@@ -82,10 +129,16 @@ VALUES ('32432432432', 'Lucas', 'Silva', '59990180', 175, 'Apto 501', 'M', TO_DA
 
 INSERT INTO HEMOCENTRO (cnpj, cep, numero, complemento, nome, capacidade) 
 VALUES ('12345678000199', '50740000', 100, 'Térreo', 'Hemocentro Esperança', 500);
+INSERT INTO HEMOCENTRO (cnpj, cep, numero, complemento, nome, capacidade) 
+VALUES ('11222333000144', '50070040', 150, 'Bloco A', 'Hemocentro Regional PE', 1000);
 
 
 INSERT INTO AGENCIA (cnpj, cep, numero, complemento) 
 VALUES ('98765432000188', '50030230', 250, 'Sala 2');
+INSERT INTO AGENCIA (cnpj, cep, numero, complemento) 
+VALUES ('44555666000177', '50670901', 1235, 'Agência Transfusional - HC');
+INSERT INTO AGENCIA (cnpj, cep, numero, complemento) 
+VALUES ('99888777000122', '50050000', 300, 'Agência Boa Vista');
 
 
 INSERT INTO TELEFONE_PESSOA (cpf_pessoa, ddd, numero) 
@@ -111,24 +164,24 @@ VALUES ('55555555555', 82, 900000000);
 INSERT INTO TELEFONE_PESSOA (cpf_pessoa, ddd, numero)
 VALUES ('66666666666', 81, 987654321); 
 INSERT INTO TELEFONE_PESSOA (cpf_pessoa, ddd, numero)
-VALUES ('66666666666', 81, 34215566); 
+VALUES ('66666666666', 81, 934215566); 
 INSERT INTO TELEFONE_PESSOA (cpf_pessoa, ddd, numero)
 VALUES ('82748273847', 81, 991223344);
 INSERT INTO TELEFONE_PESSOA (cpf_pessoa, ddd, numero)
-VALUES ('82748273847', 81, 32221100);
+VALUES ('82748273847', 81, 932221100);
 INSERT INTO TELEFONE_PESSOA (cpf_pessoa, ddd, numero)
 VALUES ('12981298129', 81, 981224455);
 INSERT INTO TELEFONE_PESSOA (cpf_pessoa, ddd, numero)
 VALUES ('12981298129', 81, 981226677);
 
 INSERT INTO FUNCIONARIO (cpf, cpf_supervisor, cargo, turno, status, escolaridade, data_admissao) 
+VALUES ('44444444444', NULL, 'Enfermeiro Chefe', 'Integral', 'Ativo', 'Superior', TO_DATE('2015-09-15', 'YYYY-MM-DD'));
+INSERT INTO FUNCIONARIO (cpf, cpf_supervisor, cargo, turno, status, escolaridade, data_admissao) 
 VALUES ('11111111111', NULL, 'Médico', 'Manhã', 'Ativo', 'Superior', TO_DATE('2020-01-15', 'YYYY-MM-DD'));
 INSERT INTO FUNCIONARIO (cpf, cpf_supervisor, cargo, turno, status, escolaridade, data_admissao) 
 VALUES ('22222222222', '44444444444', 'Enfermeiro', 'Tarde', 'Ativo', 'Superior', TO_DATE('2022-03-10', 'YYYY-MM-DD'));
 INSERT INTO FUNCIONARIO (cpf, cpf_supervisor, cargo, turno, status, escolaridade, data_admissao) 
 VALUES ('33333333333', '44444444444', 'Enfermeiro', 'Manhã', 'Ativo', 'Superior', TO_DATE('2021-01-01', 'YYYY-MM-DD'));
-INSERT INTO FUNCIONARIO (cpf, cpf_supervisor, cargo, turno, status, escolaridade, data_admissao) 
-VALUES ('44444444444', NULL, 'Enfermeiro Chefe', 'Integral', 'Ativo', 'Superior', TO_DATE('2015-09-15', 'YYYY-MM-DD'));
 INSERT INTO FUNCIONARIO (cpf, cpf_supervisor, cargo, turno, status, escolaridade, data_admissao) 
 VALUES ('32432432432', NULL, 'Recepcionista', 'Manhã', 'Ativo', 'Médio', TO_DATE('2025-01-15', 'YYYY-MM-DD'));
 INSERT INTO FUNCIONARIO (cpf, cpf_supervisor, cargo, turno, status, escolaridade, data_admissao) 
@@ -208,25 +261,25 @@ VALUES (5, 'Sertralina', '50mg');
 
 
 INSERT INTO TRIA (codigo_triagem, cpf_doador, cpf_funcionario, data_triagem) 
-VALUES (1, '33333333333', '22222222222', TO_DATE('2026-04-20', 'YYYY-MM-DD'));
+VALUES (1, '33333333333', '12981298129', TO_DATE('2026-04-20', 'YYYY-MM-DD'));
 INSERT INTO TRIA (codigo_triagem, cpf_doador, cpf_funcionario, data_triagem) 
-VALUES (2, '45645645645', '22222222222', TO_DATE('2026-04-21', 'YYYY-MM-DD'));
+VALUES (2, '45645645645', '11111111111', TO_DATE('2026-04-21', 'YYYY-MM-DD'));
 INSERT INTO TRIA (codigo_triagem, cpf_doador, cpf_funcionario, data_triagem) 
-VALUES (3, '12121212121', '33333333333', TO_DATE('2026-04-21', 'YYYY-MM-DD'));
+VALUES (3, '12121212121', '32432432432', TO_DATE('2026-04-21', 'YYYY-MM-DD'));
 INSERT INTO TRIA (codigo_triagem, cpf_doador, cpf_funcionario, data_triagem) 
-VALUES (4, '12309812309', '33333333333', TO_DATE('2026-04-21', 'YYYY-MM-DD'));
+VALUES (4, '12309812309', '12981298129', TO_DATE('2026-04-21', 'YYYY-MM-DD'));
 INSERT INTO TRIA (codigo_triagem, cpf_doador, cpf_funcionario, data_triagem) 
-VALUES (5, '98798798798', '22222222222', TO_DATE('2026-04-22', 'YYYY-MM-DD'));
+VALUES (5, '98798798798', '32432432432', TO_DATE('2026-04-22', 'YYYY-MM-DD'));
 INSERT INTO TRIA (codigo_triagem, cpf_doador, cpf_funcionario, data_triagem) 
-VALUES (6, '55555555555', '22222222222', TO_DATE('2026-04-23', 'YYYY-MM-DD'));
+VALUES (6, '55555555555', '32432432432', TO_DATE('2026-04-23', 'YYYY-MM-DD'));
 INSERT INTO TRIA (codigo_triagem, cpf_doador, cpf_funcionario, data_triagem) 
-VALUES (7, '66666666666', '33333333333', TO_DATE('2026-04-23', 'YYYY-MM-DD'));
+VALUES (7, '66666666666', '44444444444', TO_DATE('2026-04-23', 'YYYY-MM-DD'));
 INSERT INTO TRIA (codigo_triagem, cpf_doador, cpf_funcionario, data_triagem) 
-VALUES (8, '82748273847', '33333333333', TO_DATE('2026-04-23', 'YYYY-MM-DD'));
+VALUES (8, '82748273847', '44444444444', TO_DATE('2026-04-23', 'YYYY-MM-DD'));
 INSERT INTO TRIA (codigo_triagem, cpf_doador, cpf_funcionario, data_triagem) 
-VALUES (9, '12312312312', '22222222222', TO_DATE('2026-04-23', 'YYYY-MM-DD'));
+VALUES (9, '12312312312', '12981298129', TO_DATE('2026-04-23', 'YYYY-MM-DD'));
 INSERT INTO TRIA (codigo_triagem, cpf_doador, cpf_funcionario, data_triagem) 
-VALUES (10, '44444444444', '33333333333', TO_DATE('2026-04-24', 'YYYY-MM-DD'));
+VALUES (10, '44444444444', '32432432432', TO_DATE('2026-04-24', 'YYYY-MM-DD'));
 
 
 INSERT INTO DOACAO (cpf_doador, data_coleta, volume_coleta, hemocentro_processamento) 
@@ -259,5 +312,25 @@ INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferi
 VALUES (1004, '12345678000199', NULL, NULL);
 INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferido, agencia_transferida) 
 VALUES (1005, '12345678000199', NULL, NULL);
+INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferido, agencia_transferida) 
+VALUES (1006, '12345678000199', NULL, '44555666000177');
+INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferido, agencia_transferida) 
+VALUES (1007, '12345678000199', NULL, '44555666000177');
+INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferido, agencia_transferida) 
+VALUES (1008, '12345678000199', NULL, '44555666000177');
+INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferido, agencia_transferida) 
+VALUES (1009, '12345678000199', NULL, '44555666000177');
+INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferido, agencia_transferida) 
+VALUES (1010, '12345678000199', NULL, '44555666000177');
+INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferido, agencia_transferida) 
+VALUES (1011, '12345678000199', '11222333000144', NULL);
+INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferido, agencia_transferida) 
+VALUES (1012, '12345678000199', '11222333000144', NULL);
+INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferido, agencia_transferida) 
+VALUES (1013, '12345678000199', '11222333000144', NULL);
+INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferido, agencia_transferida) 
+VALUES (1014, '11222333000144', NULL, NULL);
+INSERT INTO LOTE (codigo_hemocomponente, hemocentro_origem, hemocentro_transferido, agencia_transferida) 
+VALUES (1015, '11222333000144', NULL, NULL);
 
 COMMIT;
