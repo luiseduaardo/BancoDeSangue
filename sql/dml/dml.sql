@@ -19,50 +19,50 @@ DELETE FROM Endereco;
 DROP SEQUENCE seq_triagem;
 CREATE SEQUENCE seq_triagem INCREMENT BY 1 START WITH 1;
 
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50740000', 100, 'Avenida Central');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50740010', 950, 'Avenida Central');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50030230', 250, 'Rua das Flores');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('51020000', 50, 'Avenida do Sol');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('52011000', 120, 'Rua da Paz');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('53065010', 123, 'Rua dos Pássaros');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('51075020', 225, 'Avenida Alta');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('57015090', 190, 'Rua Senador José');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('57015090', 180, 'Rua Senador José');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50745010', 305, 'Rua Alberto Câmara');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('52030080', 895, 'Rua da Praia');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('59170170', 250, 'Estrada da Batalha');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('59990180', 175, 'Rua Governador Roberto');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50070040', 150, 'Rua Joaquim Nabuco');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50670901', 1235, 'Avenida Professor Moraes Rego');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50050000', 300, 'Avenida Conde da Boa Vista');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50070070', 723, 'Rua Dom Bosco');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50040000', 1597, 'Avenida Cruz Cabugá');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50731000', 3860, 'Avenida Caxangá');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50050330', 54, 'Rua Tabira');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50731010', 1010, 'Avenida Caxangá');
-INSERT INTO ENDERECO (cep, numero, logradouro) 
-VALUES ('50706060', 1080, 'Rua da Hora');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50740000', 'Avenida Central');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50740010', 'Avenida Central');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50030230', 'Rua das Flores');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('51020000', 'Avenida do Sol');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('52011000', 'Rua da Paz');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('53065010', 'Rua dos Pássaros');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('51075020', 'Avenida Alta');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('57015090', 'Rua Senador José');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('57015090', 'Rua Senador José');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50745010', 'Rua Alberto Câmara');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('52030080', 'Rua da Praia');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('59170170', 'Estrada da Batalha');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('59990180', 'Rua Governador Roberto');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50070040', 'Rua Joaquim Nabuco');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50670901', 'Avenida Professor Moraes Rego');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50050000', 'Avenida Conde da Boa Vista');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50070070', 'Rua Dom Bosco');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50040000', 'Avenida Cruz Cabugá');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50731000', 'Avenida Caxangá');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50050330', 'Rua Tabira');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50731010', 'Avenida Caxangá');
+INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50706060', 'Rua da Hora');
 
 INSERT INTO CARGO (nome_cargo, setor, salario) 
 VALUES ('Enfermeiro', 'Triagem', 4500.00);

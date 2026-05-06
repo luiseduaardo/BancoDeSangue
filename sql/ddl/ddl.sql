@@ -20,10 +20,9 @@ DROP SEQUENCE seq_triagem;
 
 CREATE TABLE Endereco (
     cep VARCHAR2 (8),
-    numero INTEGER,
     logradouro VARCHAR2 (50),
 
-    CONSTRAINT endereco_pkey PRIMARY KEY (cep, numero)
+    CONSTRAINT endereco_pkey PRIMARY KEY (cep)
 );
 
 CREATE TABLE Pessoa (
@@ -37,7 +36,7 @@ CREATE TABLE Pessoa (
     data_nascimento DATE,
 
     CONSTRAINT pessoa_pkey PRIMARY KEY (cpf),
-    CONSTRAINT pessoa_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero),
+    CONSTRAINT pessoa_fkey FOREIGN KEY (cep) REFERENCES Endereco(cep),
 
     CONSTRAINT sexo_check CHECK (sexo in ('M', 'F'))
 );
@@ -149,7 +148,7 @@ CREATE TABLE Hemocentro (
     capacidade INTEGER,
 
     CONSTRAINT hemocentro_pkey PRIMARY KEY (cnpj),
-    CONSTRAINT hemocentro_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero)
+    CONSTRAINT hemocentro_fkey FOREIGN KEY (cep) REFERENCES Endereco(cep)
 );
 
 CREATE TABLE Doacao (
@@ -195,7 +194,7 @@ CREATE TABLE Agencia (
     complemento VARCHAR2 (60),
 
     CONSTRAINT agencia_pkey PRIMARY KEY (cnpj),
-    CONSTRAINT agencia_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero)
+    CONSTRAINT agencia_fkey FOREIGN KEY (cep) REFERENCES Endereco(cep)
 );
 
 CREATE TABLE Telefone_Agencia(
