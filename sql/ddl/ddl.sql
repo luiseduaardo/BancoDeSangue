@@ -55,7 +55,7 @@ CREATE TABLE Telefone_Pessoa (
 );
 
 CREATE TABLE Cargo (
-    nome_cargo VARCHAR2 (20),
+    nome_cargo VARCHAR2 (30),
     setor VARCHAR2 (20),
     salario FLOAT,
 
@@ -65,7 +65,7 @@ CREATE TABLE Cargo (
 CREATE TABLE Funcionario (
     cpf VARCHAR2 (11),
     cpf_supervisor VARCHAR2 (11),
-    cargo VARCHAR2 (20),
+    cargo VARCHAR2 (30),
     turno VARCHAR2 (10),
     status VARCHAR2 (10),
     escolaridade VARCHAR2 (20),
@@ -192,7 +192,7 @@ CREATE TABLE Agencia (
     cnpj VARCHAR2(14),
     cep VARCHAR2 (8),
     numero NUMBER,
-    complemento VARCHAR2 (30),
+    complemento VARCHAR2 (60),
 
     CONSTRAINT agencia_pkey PRIMARY KEY (cnpj),
     CONSTRAINT agencia_fkey FOREIGN KEY (cep, numero) REFERENCES Endereco(cep, numero)
