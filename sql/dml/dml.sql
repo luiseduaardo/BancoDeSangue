@@ -22,6 +22,8 @@ CREATE SEQUENCE seq_triagem INCREMENT BY 1 START WITH 1;
 INSERT INTO ENDERECO (cep, logradouro) 
 VALUES ('50740000', 'Avenida Central');
 INSERT INTO ENDERECO (cep, logradouro) 
+VALUES ('50740010', 'Avenida Central');
+INSERT INTO ENDERECO (cep, logradouro) 
 VALUES ('50030230', 'Rua das Flores');
 INSERT INTO ENDERECO (cep, logradouro) 
 VALUES ('51020000', 'Avenida do Sol');
