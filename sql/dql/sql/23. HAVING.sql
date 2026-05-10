@@ -11,4 +11,4 @@
 SELECT tipo_sanguineo, COUNT(*) as qtd_tipo
 FROM HEMOCOMPONENTE
 GROUP BY tipo_sanguineo
-HAVING qtd_tipo > 2;
+HAVING COUNT(*) > 2;
