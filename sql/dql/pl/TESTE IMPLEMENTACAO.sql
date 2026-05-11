@@ -40,18 +40,16 @@ CREATE OR REPLACE PACKAGE BODY AptidaoLib AS
             WHERE T.CPF_DOADOR = cpf_d;
 
         retorno doencasTable;
+        indice_doencas INTEGER := 1;
     BEGIN
-        retorno := doencasTable();
-        OPEN doencastriagemCursor(cpf_doador);
-
-        LOOP
-            retorno.extend;
-            FETCH doencastriagemCursor INTO retorno(retorno.last);
-            EXIT WHEN doencastriagemCursor%NOTFOUND;
+        FOR r IN doencastriagemCursor(cpf_doador) LOOP
+            indice_doencas := indice_doencas + 1;
+            retorno(indice_doencas).nome := r.doenca;
+            retorno(indice_doencas).data_melhora := r.data_melhora;
+            retorno(indice_doencas).cronicidade := r.cronica;
         END LOOP;
 
-        CLOSE doencastriagemCursor;
-        return retorno;
+        RETURN retorno;
     END;
 
 END AptidaoLib;
