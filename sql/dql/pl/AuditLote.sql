@@ -1,3 +1,5 @@
+-- Trigger que ativa após perações de DELETE, UPDATE e INSERT, registrando o nome do tipo de operação e os dados do usuário que realizou a operação
+
 DROP TABLE AuditoriaLote;
 DROP SEQUENCE id_audit;
 
