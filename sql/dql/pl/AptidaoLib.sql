@@ -8,6 +8,7 @@
  * - procedure
  * - function
  * - %type
+ * - %rowtype (no teste)
  * - if, elsif
  * - case, when
  * - loop exit when
