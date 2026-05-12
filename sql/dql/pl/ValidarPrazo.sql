@@ -4,6 +4,11 @@
  *
  * Causa um erro de aplicação quando o prazo
  * não é coerente com a data de processamento.
+ *
+ * Usa:
+ * - trigger de linha
+ * - exception when
+ * - if elsif
  */
 CREATE OR REPLACE TRIGGER ValidarPrazo
 BEFORE UPDATE OR INSERT ON Hemocomponente
