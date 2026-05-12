@@ -38,10 +38,10 @@ CREATE OR REPLACE PACKAGE BODY AptidaoLib AS
 
     FUNCTION IsApto(cpf_doador Doador.cpf%TYPE) RETURN BOOLEAN IS
         CURSOR c_doencas(d doencasTable) IS
-            SELECT * FROM d;
+            SELECT * FROM TABLE (d);
 
         CURSOR c_medicamentos(m medicamentosTable) IS
-            SELECT * FROM m;
+            SELECT * FROM TABLE (m);
 
         t_doencas doencasTable;
         t_doencas_qtd BINARY_INTEGER := 1;
@@ -52,7 +52,7 @@ CREATE OR REPLACE PACKAGE BODY AptidaoLib AS
         medicamento medicacaoRecord;
 
         idade INTEGER;
-        intervalo NUMBER(32,0);
+        intervalo NUMBER(3,0);
         
         retorno BOOLEAN := TRUE;
     BEGIN
@@ -79,7 +79,7 @@ CREATE OR REPLACE PACKAGE BODY AptidaoLib AS
                 'HTLV1', 
                 'HTLV2', 
                 'Hanseníase'
-            ) OR (doenca.data_melhora IS NULL AND doenca.cronicidade = FALSE)
+            ) OR (doenca.data_melhora IS NULL AND doenca.cronicidade = 'S')
             THEN
                 retorno := FALSE;
                 EXIT;
@@ -93,29 +93,30 @@ CREATE OR REPLACE PACKAGE BODY AptidaoLib AS
             FETCH c_medicamentos INTO medicamento;
             EXIT WHEN c_medicamentos%NOTFOUND;
 
-            intervalo := EXTRACT(DAY FROM SYSDATE - medicamento.data_triagem);
-            CASE intervalo
-                WHEN intervalo BETWEEN 0 AND 5 THEN
+            intervalo := SYSDATE - medicamento.data_triagem;
+            
+            CASE
+                WHEN intervalo <= 5 THEN
                     IF medicamento.medicamento IN ('Anti-inflamatórios', 'AAS', 'Diclofenaco') THEN
                         retorno := FALSE;
                         EXIT;
                     END IF;
-                WHEN intervalo BETWEEN 0 AND 15 THEN
+                WHEN intervalo <= 15 THEN
                     IF medicamento.medicamento IN ('Antibióticos') THEN
                         retorno := FALSE;
                         EXIT;
                     END IF;
-                WHEN intervalo BETWEEN 0 AND 30 THEN
+                WHEN intervalo <= 30 THEN
                     IF medicamento.medicamento IN ('Roacutan', 'Finasterida', 'Carbonato de Lítio') THEN
                         retorno := FALSE;
                         EXIT;
                     END IF;
-                WHEN intervalo BETWEEN 0 AND 180 THEN
+                WHEN intervalo <= 180 THEN
                     IF medicamento.medicamento IN ('Dutasterida') THEN
                         retorno := FALSE;
                         EXIT;
                     END IF;
-                WHEN intervalo BETWEEN 0 AND 365 THEN
+                WHEN intervalo <= 365 THEN
                     IF medicamento.medicamento IN ('Anabolizantes') THEN
                         retorno := FALSE;
                         EXIT;
@@ -126,6 +127,7 @@ CREATE OR REPLACE PACKAGE BODY AptidaoLib AS
                         EXIT;
                     END IF;
             END CASE;
+            
         END LOOP;
 
         CLOSE c_medicamentos;
@@ -135,3 +137,9 @@ CREATE OR REPLACE PACKAGE BODY AptidaoLib AS
 
 END AptidaoLib;
 /
+
+DECLARE
+    b BOOLEAN;
+BEGIN
+    b := APTIDAOLIB.ISAPTO('45645645645');
+END;

@@ -23,7 +23,7 @@ CREATE OR REPLACE PACKAGE AptidaoLib AS
 
     PROCEDURE GetMedicamentos(cpf_doador Doador.cpf%TYPE, t_medicamentos OUT medicamentosTable, t_i IN OUT BINARY_INTEGER);
 
-    FUNCTION IsApto(cpf Doador.cpf%TYPE) RETURN BOOLEAN;
+    FUNCTION IsApto(cpf_doador Doador.cpf%TYPE) RETURN BOOLEAN;
 
 END AptidaoLib;
 /
