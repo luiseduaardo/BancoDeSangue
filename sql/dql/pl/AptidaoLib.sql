@@ -1,3 +1,23 @@
+/**
+ * Pacote que tem procedimentos utilitários para verificar se um paciente é apto para doar sangue ou não.
+ *
+ * Usa:
+ * - records
+ * - estrutura de dados do tipo table
+ * - bloco anônimo (para testar)
+ * - procedure
+ * - function
+ * - %type
+ * - if, elsif
+ * - case, when
+ * - loop exit when
+ * - for in loop
+ * - select into
+ * - cursor
+ * - parametros in, out, in out
+ * - package
+ * - package body
+ */
 CREATE OR REPLACE PACKAGE AptidaoLib AS
 
     TYPE doencaRecord IS RECORD (
