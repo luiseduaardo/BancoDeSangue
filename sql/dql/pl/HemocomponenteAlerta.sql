@@ -1,3 +1,5 @@
+-- cria um cursor que recolhe todos os Hemocomponentes com data de validade que vence nos próximos 5 dias, e imprime um alerta com a informação de tais Hemocomponentes
+
 DECLARE
     CURSOR c_estoque_alerta IS
         SELECT *
